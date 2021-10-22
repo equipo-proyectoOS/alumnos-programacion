@@ -1,6 +1,5 @@
 const ctrlHome = {};
-const { distinct } = require('../models/alumno');
-const Estudiante = require('../models/alumno');
+const Estudiante = require('../models/estudiante');
 
 
 

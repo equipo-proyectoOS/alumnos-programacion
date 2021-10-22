@@ -20,10 +20,6 @@ const EstudianteSchema = new Schema({
           type: String,
           required: [true, "La ciudad es necesaria"],
         },
-        codigo_postal: {
-          type: Number,
-          required: [true, "La ciudad es necesaria"],
-        },
       },
       dni: {
         type: String,
@@ -42,7 +38,7 @@ const EstudianteSchema = new Schema({
           required: [true, "El número de teléfono es necesario"],
         },
       ],
-      genero: { type: Number, min: 0, max: 2 },
+      genero: { type: Number, min: 0, max: 2 }, // 0= Hombre , 1 = Mujer , 3 = Otres
       nacionalidad: {
           type: String,
           required: true,
@@ -59,20 +55,10 @@ const EstudianteSchema = new Schema({
         required: true,
       },
     },
-    conocimientos_informaticos: [Boolean]
+    conocimientos_informaticos:{
+      type: Boolean,
+      required: true
+    }
   });
 
 module.exports = model('Estudiante', EstudianteSchema);
-/*const UserShema = new Schema({
-    email:{
-        type: String,
-        require:true
-    },
-    password:{
-        type: String,
-        require:true
-    }
-    
-
-});
-*/
