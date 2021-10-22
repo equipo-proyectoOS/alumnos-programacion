@@ -1,5 +1,6 @@
 const ctrlHome = {};
-const Usuario = require('../models/user');
+const { distinct } = require('../models/alumno');
+const Estudiante = require('../models/alumno');
 
 
 
@@ -8,21 +9,21 @@ const Usuario = require('../models/user');
  
 ctrlHome.rutaGet = async (req,res)=>{
 
-    const usuario = await Usuario.find();
+    const alumno = await Estudiante.find();
 
-    res.json(usuario);
+    res.json(alumno);
 }
 
 //ruta agregar users
 
 ctrlHome.rutaPost = async (req,res)=>{
      
-    const {email, password} = req.body;
+    const {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos} = req.body;
+    
+    const alumno = new Estudiante({datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos})
 
-    const usuario = new Usuario({email,password})
-
-    await usuario.save();
-    res.json({msg: 'Usuario agregado'})
+    await alumno.save();
+    res.json({msg: 'alum agregado'})
 };
 
 //ruta eliminar users
@@ -30,7 +31,7 @@ ctrlHome.rutaDelete = async (req,res)=>{
     const {id}= req.body;
 
     try{
-        await Usuario.findByIdAndDelete(req.params.id);
+        await Estudiante.findByIdAndDelete(req.params.id);
 
         return res.json({msg: 'user removed'})
     } catch(error){
@@ -44,16 +45,14 @@ ctrlHome.rutaDelete = async (req,res)=>{
 ctrlHome.rutaPut = async (req , res)=>{
 
     const { id } = req.params;
-    let {email, password}= req.body
+    let {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos}= req.body
 
 
-    /*if(password){
-
-    } */
+  
 
     try {
-        const usuario = await Usuario.findByIdAndUpdate(id, {email, password});
-        return res.json(usuario)
+        const alumno = await Estudiante.findByIdAndUpdate(id, {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos});
+        return res.json(alumno)
     } catch (error) {
         console.log(`Error to update user: ${error}`)
     }
