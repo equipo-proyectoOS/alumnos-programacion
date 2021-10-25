@@ -1,5 +1,5 @@
 const ctrlHome = {};
-const Estudiante = require('../models/estudiante');
+const Estudiante = require('../models/estudiantes');
 
 
 
@@ -8,7 +8,7 @@ const Estudiante = require('../models/estudiante');
  
 ctrlHome.rutaGet = async (req,res)=>{
 
-    const alumno = await Estudiante.find();
+    const alumno = await Estudiante.find().populate('userId','nombre_usuario');
 
     res.json(alumno);
 }
@@ -16,10 +16,10 @@ ctrlHome.rutaGet = async (req,res)=>{
 //ruta agregar users
 
 ctrlHome.rutaPost = async (req,res)=>{
-     
-    const {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos, activo} = req.body;
-    
-    const alumno = new Estudiante({datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos, activo})
+    const body=req.body;
+    body.userId = req.usuario._id
+
+    const alumno = new Estudiante(body)
 
     await alumno.save();
     res.json({msg: 'alum agregado'})
@@ -42,15 +42,17 @@ ctrlHome.rutaDelete = async (req,res)=>{
 
 //ruta editar users
 ctrlHome.rutaPut = async (req , res)=>{
+    const body=req.body;
+    body.userId = req.usuario._id
 
     const { id } = req.params;
-    let {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos, activo}= req.body
+    
 
 
   
 
     try {
-        const alumno = await Estudiante.findByIdAndUpdate(id, {datos_personales:{nombre_apellido, edad,direccion:{calle,ciudad,codigo_postal},dni,correo,numero_telefono,genero,nacionalidad},secundario:{institucion,titulo},conocimientos_informaticos, activo});
+        const alumno = await Estudiante.findByIdAndUpdate(id, body);
         return res.json(alumno)
     } catch (error) {
         console.log(`error al actulizar usuario: ${error}`)
@@ -61,15 +63,15 @@ ctrlHome.rutaPut = async (req , res)=>{
 
 //eliminar user automaticamante
 
-ctrlHome.logicalRutaDelete= async (req, res)=>{
+ctrlHome.rutaLogicalDelete= async (req, res)=>{
 
-    const {id} = req.body;
+    const {id} = req.params;
 
-    const alumno = await Estudiante.findByIdAndUpdate(id,{ activo: false }, {new: true });
-
+    const alumno = await Estudiante.findByIdAndUpdate(id,{ activo: false });
+    console.log(id)
     //responde si fue eliminado correctamente
 
-    res.json({msg:`Usuario eliminado logicamente`}, alumno)
+    res.json({msg:`Usuario eliminado logicamente`, alumno})
 }
 
 

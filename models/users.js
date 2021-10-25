@@ -14,7 +14,7 @@ const UserShema = new Schema({
         require:true
     },
     activo:{
-        type: String,
+        type: Boolean,
         default: true
     }
 

@@ -1,5 +1,5 @@
 const ctrlUser = {};
-const User = require('../models/user');
+const User = require('../models/users');
 const {generate_jwt} = require('../helpers/generar_jwt');
 
 ctrlUser.rutaGet = async (req,res)=>{
@@ -98,16 +98,16 @@ ctrlUser.rutaDelete = async (req,res)=>{
 
 
 // eliminacion logica
-ctrlUser.logicalRutaDelete= async (req, res)=>{
+ctrlUser.rutaLogicalDelete= async (req, res)=>{
 
     const {id} = req.body;
 
-    const alumno = await Estudiante.findByIdAndUpdate(id,{ activo: false }, {new: true });
+    const usuario =await User.findByIdAndUpdate(id,{ activo: false }, {new: true });
 
     
     //responde si fue eliminado correctamente
 
-    res.json({msg:`Usuario eliminado logicamente`}, alumno)
+    res.json({msg:`Usuario eliminado logicamente`}, usuario)
 }
 
 module.exports = ctrlUser;

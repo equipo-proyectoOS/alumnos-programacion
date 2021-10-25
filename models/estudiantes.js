@@ -1,12 +1,12 @@
 const {model, Schema}= require('mongoose');
-//const {} = require('models/User');
+const {} = require('./users');
 
 const EstudianteSchema = new Schema({
-  //userId:{type:Schema.Types.ObjectId, ref: 'User'
-  //    },
+  userId:{type:Schema.Types.ObjectId, ref: 'User'
+      },
 
   //preguntar  sobre esto
-  datos_personales: {
+    datos_personales: {
      
       nombre_apellido: {
         type: String,
