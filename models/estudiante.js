@@ -1,8 +1,13 @@
 const {model, Schema}= require('mongoose');
-
+//const {} = require('models/User');
 
 const EstudianteSchema = new Schema({
-    datos_personales: {
+  //userId:{type:Schema.Types.ObjectId, ref: 'User'
+  //    },
+
+  //preguntar  sobre esto
+  datos_personales: {
+     
       nombre_apellido: {
         type: String,
         required: [true, "El nombre es necesario"],
@@ -58,6 +63,10 @@ const EstudianteSchema = new Schema({
     conocimientos_informaticos:{
       type: Boolean,
       required: true
+    },
+    activo:{
+      type: Boolean,
+      default:true
     }
   });
 
