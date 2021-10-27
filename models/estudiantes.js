@@ -28,8 +28,8 @@ const EstudianteSchema = new Schema({
       },
       dni: {
         type: String,
-        unique: [true, "El correo está duplicado"],
-        required: [true, "El correo es necesario"],
+        unique: [true, "El dni está duplicado"],
+        required: [true, "El dni es necesario"],
       },
       correo: {
         type: String,

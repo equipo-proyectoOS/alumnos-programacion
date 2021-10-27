@@ -16,6 +16,10 @@ const UserShema = new Schema({
     activo:{
         type: Boolean,
         default: true
+    },
+    rol:{
+        type: String,
+        default: "admin"
     }
 
 });
