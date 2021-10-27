@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors());
 //conexion al server
-app.set("port", process.env.PORT || 5000);
+app.set("port", process.env.PORT || 2000);
 
 //rutas 
 app.use(require('./routes/user.routes'));
