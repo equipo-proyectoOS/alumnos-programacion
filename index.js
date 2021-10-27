@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-
+const cors = require('cors');
 //inicializaciones
 const app = express();
 require('dotenv').config();
@@ -10,6 +10,7 @@ require('./connection');
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cors());
 //conexion al server
 app.set("port", process.env.PORT || 5000);
 
