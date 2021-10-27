@@ -75,7 +75,7 @@ rutaGet)
 
 //ruta agregar usuarios
 router.post('/estudiante',
- validar_jwt,
+ /* validar_jwt, */
 
  [
     body('datos_personales.nombre_apellido', 'El nombre y apellido ingresado no contiene un formato correcto')
