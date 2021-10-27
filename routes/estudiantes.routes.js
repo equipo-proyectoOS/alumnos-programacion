@@ -9,7 +9,7 @@ const{
 
 //crear nuevo usuario
 router.get('/estudiante',
-validar_jwt,
+/* validar_jwt,
 [
     body('datos_personales.nombre_apellido', 'El nombre y apellido ingresado no contiene un formato correcto')
     .isString()
@@ -70,7 +70,7 @@ validar_jwt,
     .isBoolean()
     .not()
     .isEmpty(),
-    validarCampos],
+    validarCampos], */
 rutaGet)
 
 //ruta agregar usuarios
