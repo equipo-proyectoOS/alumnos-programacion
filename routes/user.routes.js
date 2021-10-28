@@ -6,13 +6,12 @@ const { body, check } = require('express-validator');
 const{
     rutaPost,rutaLogin,rutaDelete,rutaGet, rutaPut, rutaLogicalDelete
 }=  require('../controllers/user.controllers')
-const { ExisteEmail } = require('../middlewares/validar_email');
+const { validarUser } = require('../middlewares/validar_user');
 
 //RUTA LOGIN
 router.post('/auth/login', 
 
 [
-
     body('email', 'el correo ingresado no contiene un formato correcto')
     .isEmail()
     .not()
@@ -23,9 +22,7 @@ router.post('/auth/login',
     .not()
     .isEmpty(),
     
-    
     validarCampos,
-
 ],
 
 rutaLogin)
@@ -35,109 +32,34 @@ rutaLogin)
 //crear nuevo usuario
 router.get('/api/get-user',
 
-[
-
- body('nombre_usuario', 'El username ingresado no contiene un formato correcto')
-.isString()
-.not()
-.isEmpty(),
-
-
-body('email', 'el correo ingresado no contiene un formato correcto')
-    .isEmail()
-    .not()
-    .isEmpty()
-    .custom(ExisteEmail),
-
- body('password', 'El password ingresado no contiene un formato correcto')
-.isString()
-.not()
-.isEmpty(),
+validarUser,
 validarCampos,
-
-],
-
 rutaGet)
 
 //ruta agregar usuarios
 router.post('/registro',
 
-   
-[
-    
-    body('nombre_usuario', 'El username ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty(),
-    
-    body('email', 'el correo ingresado no contiene un formato correcto')
-        .isEmail()
-        .not()
-        .isEmpty()
-        .custom(ExisteEmail),
-    
-     body('password', 'El password ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty(),
-   
-    validarCampos,
-],
-
+validarUser,
+validarCampos,
 rutaPost)
 
 
 //ruta editar usuario
 router.put('/api/edit-user/:id',
+
 validar_jwt,
-
-[
-    body('nombre_usuario', 'El username ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty(),
-    
-    
-    body('email', 'el correo ingresado no contiene un formato correcto')
-        .isEmail()
-        .not()
-        .isEmpty()
-        .custom(ExisteEmail),
-
-     body('password', 'El password ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty(),
-    
-    validarCampos,
-]
-
-,rutaPut)
+validarUser,
+check('id','No es un id de MongoDB válido').isMongoId(),
+validarCampos,
+rutaPut)
 
 
 //ruta eliminar usuarios
 router.delete('/api/delete-user/:id',
+
 validar_jwt,
-
-[
-body('nombre_usuario', 'El username ingresado no contiene un formato correcto')
-.isString()
-.not()
-.isEmpty(),
-
-
-body('email', 'el correo ingresado no contiene un formato correcto')
-    .isEmail()
-    .not()
-    .isEmpty()
-    .custom(ExisteEmail),
- body('password', 'El password ingresado no contiene un formato correcto')
-.isString()
-.not()
-.isEmpty(),
+check('id','No es un id de MongoDB válido').isMongoId(),
 validarCampos,
-],
-
 rutaDelete)
 
 
@@ -145,28 +67,9 @@ rutaDelete)
 router.put('/api/delete-user-logical/:id',
 
 validar_jwt,
-
-[
-    body('nombre_usuario', 'El username ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty(),
-    
-    
-    body('email', 'el correo ingresado no contiene un formato correcto')
-        .isEmail()
-        .not()
-        .isEmpty(),
-    
-     body('password', 'El password ingresado no contiene un formato correcto')
-    .isString()
-    .not()
-    .isEmpty()
-    .custom(ExisteEmail),
-    validarCampos,
-]
-
-,rutaLogicalDelete)
+check('id','No es un id de MongoDB válido').isMongoId(),
+validarCampos,
+rutaLogicalDelete)
 
 
 module.exports =router;

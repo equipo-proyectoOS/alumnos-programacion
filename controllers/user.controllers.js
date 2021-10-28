@@ -100,14 +100,16 @@ ctrlUser.rutaDelete = async (req,res)=>{
 // eliminacion logica
 ctrlUser.rutaLogicalDelete= async (req, res)=>{
 
-    const {id} = req.body;
+    const {id} = req.params;
 
     const usuario =await User.findByIdAndUpdate(id,{ activo: false }, {new: true });
 
     
     //responde si fue eliminado correctamente
 
-    res.json({msg:`Usuario eliminado logicamente`}, usuario)
+    return res.status(201).json({
+        msg: "user removido logicamente", usuario
+    })
 }
 
 module.exports = ctrlUser;
